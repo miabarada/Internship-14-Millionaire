@@ -22,6 +22,7 @@ body {
 .start-screen h1 {
   color: white;
   font-size: 60px;
+  text-align: center;
 }
 
 .start-screen button {
@@ -190,6 +191,16 @@ body {
 
 .jokers button:hover {
   background-color: #12123a
+}
+
+.jokers button:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+.jokers button:disabled:hover {
+  opacity: 0.5;
+  background-color: #06061d;
 }
 
 

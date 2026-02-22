@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import React from "react";
 
 const QuestionScreen = ({ question, currentLevel, levels, onAnswer, jokers, onFiftyFifty, onSkip}) => {
@@ -22,6 +22,10 @@ const QuestionScreen = ({ question, currentLevel, levels, onAnswer, jokers, onFi
     onFiftyFifty();
   }
 
+  useEffect(() => {
+   setHiddenAnswers([]);
+  }, [question]);
+
    return (
       <div className="question-screen">
          <div className="question-main">
@@ -31,6 +35,7 @@ const QuestionScreen = ({ question, currentLevel, levels, onAnswer, jokers, onFi
             </div>
             <div className="jokers">
                <button disabled={!jokers.fiftyFifty} onClick={handleFiftyFifty}>50:50</button>
+               <button disabled={!jokers.skipQuestion} onClick={onSkip}>Preskoči</button>
             </div>
             <div className="answers">
                {question.answers.map((answer, index) => {

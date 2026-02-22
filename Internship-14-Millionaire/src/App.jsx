@@ -69,13 +69,26 @@ function App() {
     }));
   }
 
+  function handleSkip() {
+   if(currentQuestion === 9) {
+    setGameOver(true);
+   } else {
+    setCurrentQuestion(prev => prev + 1);
+   }
+
+   setJokers(prev => ({
+    ...prev, 
+    skipQuestion: false
+   }));
+  }
+
   if(!gameStarted) 
     return (<StartScreen onStart = {startGame}/>);
 
   if(gameOver)
     return (<EndScreen earned={earned} onRestart={resetGame}/>);
 
-  return (<QuestionScreen question={selectedQuestions[currentQuestion]} currentLevel={currentQuestion} levels={levels} onAnswer={handleAnswer} jokers={jokers} onFiftyFifty={handleFiftyFifty}/>);
+  return (<QuestionScreen question={selectedQuestions[currentQuestion]} currentLevel={currentQuestion} levels={levels} onAnswer={handleAnswer} jokers={jokers} onFiftyFifty={handleFiftyFifty} onSkip={handleSkip}/>);
 }
 
 export default App
