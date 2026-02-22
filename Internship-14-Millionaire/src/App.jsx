@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react"
 import StartScreen from "./components/StartScreen"
 import { questions } from "./constants/questions";
+import QuestionScreen from "./components/QuestionScreen";
+import { levels } from "./constants/levels";
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -33,9 +35,36 @@ function App() {
     setEarned(0);
   }
 
-  return (
-    <StartScreen onStart = {startGame}/>
-  )
+  function handleAnswer(isCorrect) {
+    if (isCorrect) {
+      if (currentQuestion === 9) {
+        setEarned(500000);
+        setGameOver(true);
+      } else {
+        setCurrentQuestion(prev => prev + 1);
+      }
+    } else {
+      if (currentQuestion >= 4) {
+        setEarned(5000);
+      } else {
+        setEarned(0);
+      }
+      setGameOver(true);
+    }
+  }
+
+  function resetGame() {
+    setGameStarted(false);
+    setSelectedQuestions([]);
+    setCurrentQuestion(0);
+    setGameOver(false);
+    setEarned(0);
+  }
+
+  if(!gameStarted) 
+    return <StartScreen onStart = {startGame}/>;
+
+  return (<QuestionScreen question={selectedQuestions[currentQuestion]} currentLevel={currentQuestion} levels={levels} onAnswer={handleAnswer} />);
 }
 
 export default App
