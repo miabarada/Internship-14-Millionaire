@@ -4,6 +4,7 @@ import StartScreen from "./components/StartScreen"
 import { questions } from "./constants/questions";
 import QuestionScreen from "./components/QuestionScreen";
 import { levels } from "./constants/levels";
+import EndScreen from "./components/EndScreen";
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -61,10 +62,20 @@ function App() {
     setEarned(0);
   }
 
-  if(!gameStarted) 
-    return <StartScreen onStart = {startGame}/>;
+  function handleFiftyFifty() {
+    setJokers(prev=> ({
+      ...prev, 
+      fiftyFifty: false
+    }));
+  }
 
-  return (<QuestionScreen question={selectedQuestions[currentQuestion]} currentLevel={currentQuestion} levels={levels} onAnswer={handleAnswer} />);
+  if(!gameStarted) 
+    return (<StartScreen onStart = {startGame}/>);
+
+  if(gameOver)
+    return (<EndScreen earned={earned} onRestart={resetGame}/>);
+
+  return (<QuestionScreen question={selectedQuestions[currentQuestion]} currentLevel={currentQuestion} levels={levels} onAnswer={handleAnswer} jokers={jokers} onFiftyFifty={handleFiftyFifty}/>);
 }
 
 export default App

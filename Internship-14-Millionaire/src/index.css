@@ -84,7 +84,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px;
 }
 
 .question {
@@ -139,6 +139,57 @@ body {
 .answer.wrong {
   outline: 2px solid red;
   border: none
+}
+
+.end-screen{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.end-screen h1 {
+  color: white;
+  font-size: 60px;
+}
+
+.end-screen button {
+  padding:16px;
+  font-size: 24px;
+  background-color: #00308F;
+  border: 1px solid white;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.end-screen p {
+  color: white;
+  font-size: 24px;
+}
+
+.jokers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.jokers button {
+  border: 1px solid goldenrod;
+  color: white;
+  background-color: #06061d;
+  padding: 8px;
+  font-size: 24px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.jokers button:hover {
+  background-color: #12123a
 }
 
 

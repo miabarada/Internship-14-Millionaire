@@ -1,8 +1,9 @@
 import { useState } from "react"
 import React from "react";
 
-const QuestionScreen = ({ question, currentLevel, levels, onAnswer}) => {
+const QuestionScreen = ({ question, currentLevel, levels, onAnswer, jokers, onFiftyFifty, onSkip}) => {
    const [selectedAnswer, setSelectedAnswer] = useState(null);
+   const [hiddenAnswers, setHiddenAnswers] = useState([]);
 
    const handleclick = (answer) => {
       if(selectedAnswer) return;
@@ -10,8 +11,16 @@ const QuestionScreen = ({ question, currentLevel, levels, onAnswer}) => {
       setTimeout(() => {
          onAnswer(answer.correct);
          setSelectedAnswer(null)
-      }, 5000);
+      }, 2500);
    };
+
+   function handleFiftyFifty() {
+    const wrongAnswers = question.answers.map((a, i) => (!a.correct ? i : null)).filter(i => i !== null);
+    const toRemove = wrongAnswers.sort(() => Math.random() - 0.5).slice(0, 2);
+
+    setHiddenAnswers(toRemove);
+    onFiftyFifty();
+  }
 
    return (
       <div className="question-screen">
@@ -20,8 +29,12 @@ const QuestionScreen = ({ question, currentLevel, levels, onAnswer}) => {
                <h2>Pitanje {currentLevel + 1}: {levels[currentLevel]}€</h2>
                <p>{question.question}</p>
             </div>
+            <div className="jokers">
+               <button disabled={!jokers.fiftyFifty} onClick={handleFiftyFifty}>50:50</button>
+            </div>
             <div className="answers">
                {question.answers.map((answer, index) => {
+                  if (hiddenAnswers.includes(index)) return null;
                   let className = "answer";
                   if (selectedAnswer) {
                      if (answer === selectedAnswer) {
@@ -41,7 +54,7 @@ const QuestionScreen = ({ question, currentLevel, levels, onAnswer}) => {
          <div className="sidebar">
             <div className="levels">
                {levels.map((level, i) => (
-                  <div key={i} className={i === currentLevel ? "current-level" : i === 4 ? "safe-level" : ""}>{level}€</div>
+                  <div key={i} className={i === 4 ? "safe-level" : i === currentLevel ? "current-level" : ""}>{level}€</div>
                ))}
             </div>
          </div>

@@ -113,8 +113,8 @@ export const questions = [
     id: 11,
     question: "Koja televizijska serija ima najviše Emmy nagrada u jednoj sezoni?",
     answers: [
-      { text: "Shogun", correct: false },
-      { text: "Game of thrones", correct: true },
+      { text: "Game of thrones", correct: false },
+      { text: "Shogun", correct: true },
       { text: "Bear", correct: false },
       { text: "Stranger things", correct: false },
     ],
