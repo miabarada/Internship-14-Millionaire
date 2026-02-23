@@ -174,7 +174,7 @@ body {
 
 .jokers {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -183,7 +183,7 @@ body {
   color: white;
   background-color: #06061d;
   padding: 8px;
-  font-size: 24px;
+  font-size: 20px;
   height: 60px;
   cursor: pointer;
   border-radius: 12px;

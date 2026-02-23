@@ -12,10 +12,12 @@ function App() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [earned, setEarned] = useState(0);
+  const [remainingQuestions, setRemainingQuestions] = useState([]);
 
   const [jokers, setJokers] = useState({
     fiftyFifty: true,
-    skipQuestion: true
+    skipQuestion: true,
+    changeQuestion: true
   });
 
   function shuffle(array) {
@@ -29,11 +31,14 @@ function App() {
       answers: shuffle(q.answers)
     }));
 
+    const remainingQuestions = shuffledQuestions.slice(10);
+
     setGameStarted(true);
     setSelectedQuestions(selectedQuestions);
     setCurrentQuestion(0);
     setGameOver(false);
     setEarned(0);
+    setRemainingQuestions(remainingQuestions);
   }
 
   function handleAnswer(isCorrect) {
@@ -82,13 +87,33 @@ function App() {
    }));
   }
 
+  function handleChangeQuestion() {
+    if(!remainingQuestions.length) return;
+
+    const newQuestion = remainingQuestions[0];
+
+    const updatedQuestions = [...selectedQuestions];
+    updatedQuestions[currentQuestion] = {
+      ...newQuestion,
+      answers: shuffle(newQuestion.answers)
+    }
+
+    setSelectedQuestions(updatedQuestions)
+    setRemainingQuestions(prev => prev.slice(1));
+
+    setJokers(prev => ({
+      ...prev,
+      changeQuestion: false
+    }));
+  }
+
   if(!gameStarted) 
     return (<StartScreen onStart = {startGame}/>);
 
   if(gameOver)
     return (<EndScreen earned={earned} onRestart={resetGame}/>);
 
-  return (<QuestionScreen question={selectedQuestions[currentQuestion]} currentLevel={currentQuestion} levels={levels} onAnswer={handleAnswer} jokers={jokers} onFiftyFifty={handleFiftyFifty} onSkip={handleSkip}/>);
+  return (<QuestionScreen question={selectedQuestions[currentQuestion]} currentLevel={currentQuestion} levels={levels} onAnswer={handleAnswer} jokers={jokers} onFiftyFifty={handleFiftyFifty} onSkip={handleSkip} onChangeQuestion={handleChangeQuestion}/>);
 }
 
 export default App

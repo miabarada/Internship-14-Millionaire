@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import React from "react";
 
-const QuestionScreen = ({ question, currentLevel, levels, onAnswer, jokers, onFiftyFifty, onSkip}) => {
+const QuestionScreen = ({ question, currentLevel, levels, onAnswer, jokers, onFiftyFifty, onSkip, onChangeQuestion}) => {
    const [selectedAnswer, setSelectedAnswer] = useState(null);
    const [hiddenAnswers, setHiddenAnswers] = useState([]);
 
@@ -35,7 +35,8 @@ const QuestionScreen = ({ question, currentLevel, levels, onAnswer, jokers, onFi
             </div>
             <div className="jokers">
                <button disabled={!jokers.fiftyFifty} onClick={handleFiftyFifty}>50:50</button>
-               <button disabled={!jokers.skipQuestion} onClick={onSkip}>Preskoči</button>
+               <button disabled={!jokers.skipQuestion} onClick={onSkip}>Preskoči pitanje</button>
+               <button disabled={!jokers.changeQuestion} onClick={onChangeQuestion}>Zamijeni pitanje</button>
             </div>
             <div className="answers">
                {question.answers.map((answer, index) => {
